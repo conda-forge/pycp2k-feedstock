@@ -6,28 +6,30 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 460291dcf01a8f042e61bfbfa1526255877a6ef67242acc27b7eec2d8909839d
   patches: 
     - anaconda.patch
 
 build:
   noarch: python
-  number: 2
+  number: 3
   script: "{{ PYTHON }} -m pip install . -vv"
 
 requirements:
   host:
-    - python
+    - python {{ python_min }}
     - pip
   run:
-    - python
+    - python >={{ python_min }}
     - pip
     - future
     - ase
     - numpy
 
 test:
+  requires:
+    - python {{ python_min }}
   imports:
     - pycp2k
   commands:
