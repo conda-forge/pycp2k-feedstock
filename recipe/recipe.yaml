@@ -1,0 +1,55 @@
+schema_version: 1
+
+context:
+  name: pycp2k
+  version: "0.2.2"
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/${{ name }}-${{ version }}.tar.gz
+  sha256: 460291dcf01a8f042e61bfbfa1526255877a6ef67242acc27b7eec2d8909839d
+  patches:
+    - anaconda.patch
+
+build:
+  number: 4
+  noarch: python
+  script: ${{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - python ${{ python_min }}.*
+    - pip
+    - setuptools
+  run:
+    - python >=${{ python_min }}
+    - pip
+    - future
+    - ase
+    - numpy
+
+tests:
+  - python:
+      imports:
+        - pycp2k
+      pip_check: true
+      python_version: ${{ python_min }}
+
+about:
+  license: LGPL-3.0-only
+  license_file: LICENSE
+  summary: Python Cp2k interface
+  description: |
+    PYCP2K is a python package providing a dynamic object-oriented
+    interface to CP2K, an atomistic and molecular simulation software.
+  homepage: https://github.com/SINGROUP/pycp2k
+  repository: https://github.com/SINGROUP/pycp2k
+  documentation: https://github.com/SINGROUP/pycp2k
+
+extra:
+  recipe-maintainers:
+    - jan-janssen
+    - lauri-codes
