@@ -32,7 +32,7 @@ requirements:
 tests:
   - python:
       imports:
-        - pycp2k
+        - cp2k
       pip_check: true
       python_version:
         - ${{ python_min }}
