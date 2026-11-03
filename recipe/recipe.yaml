@@ -2,7 +2,7 @@ schema_version: 1
 
 context:
   name: pycp2k
-  version: "0.2.2"
+  version: "0.3.0"
 
 package:
   name: ${{ name|lower }}
@@ -10,12 +10,10 @@ package:
 
 source:
   url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/${{ name }}-${{ version }}.tar.gz
-  sha256: 460291dcf01a8f042e61bfbfa1526255877a6ef67242acc27b7eec2d8909839d
-  patches:
-    - anaconda.patch
+  sha256: 8b1ebcdcc9326463fe90102a133142d1e5ae94d154689f6df9674851b0152fce
 
 build:
-  number: 4
+  number: 0
   noarch: python
   script: ${{ PYTHON }} -m pip install . -vv
 
@@ -34,9 +32,11 @@ requirements:
 tests:
   - python:
       imports:
-        - pycp2k
+        - cp2k
       pip_check: true
-      python_version: ${{ python_min }}
+      python_version:
+        - ${{ python_min }}
+        - "*"
 
 about:
   license: LGPL-3.0-only
